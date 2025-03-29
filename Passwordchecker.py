@@ -19,7 +19,7 @@ def calculate_entropy(password):
     return entropy
 
 # Function to check password strength
-def check_password():
+def check_password(event=None):  # Added `event=None` to handle key binding
     password = entry_password.get()
     if not password:
         messagebox.showwarning("Warning", "Please enter a password")
@@ -48,28 +48,32 @@ def suggest_password():
 root = tk.Tk()
 root.title("Password Strength Checker")
 root.geometry("400x250")
-root.configure(bg="#2C2F33")
 
+# Apply styles
 style = ttk.Style()
-style.configure("TButton", font=("Arial", 12))
-style.configure("TLabel", font=("Arial", 12), background="#2C2F33", foreground="white")
+style.configure("TButton", font=("Arial", 16))  # Large font size for buttons
+style.configure("TLabel", font=("Arial", 16), background="#2C2F33", foreground="white")  # Large font size for labels
 
+# Create a frame for the widgets
 frame = ttk.Frame(root, padding=20)
-frame.pack(expand=True)
+frame.place(relx=0.5, rely=0.5, anchor="center")  # Center the frame
 
 label_title = ttk.Label(frame, text="Enter Password:")
 label_title.pack()
 
-entry_password = ttk.Entry(frame, width=30, show="*")
+entry_password = ttk.Entry(frame, width=30)  # Password is visible
 entry_password.pack(pady=5)
 
 btn_check = ttk.Button(frame, text="Check Strength", command=check_password)
 btn_check.pack(pady=5)
 
-label_result = ttk.Label(frame, text="", font=("Arial", 12, "bold"))
+label_result = ttk.Label(frame, text="", font=("Arial", 16, "bold"))  # Large font size for result
 label_result.pack(pady=5)
 
 btn_suggest = ttk.Button(frame, text="Suggest Strong Password", command=suggest_password)
 btn_suggest.pack(pady=5)
+
+# Bind the Enter key to the check_password function
+root.bind("<Return>", check_password)
 
 root.mainloop()
